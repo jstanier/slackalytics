@@ -1,0 +1,8 @@
+CREATE KEYSPACE slackalytics WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+
+CREATE TABLE slackalytics.channel_counts (
+    channel TEXT,
+    date TIMESTAMP,
+    messages COUNTER,
+    PRIMARY KEY (channel, date)
+);
