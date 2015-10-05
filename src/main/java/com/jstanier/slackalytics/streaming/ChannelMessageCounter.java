@@ -14,8 +14,6 @@ import java.util.Map;
 
 public class ChannelMessageCounter implements IRichBolt {
 
-    private static final int BATCH_SIZE = 10;
-
     private OutputCollector outputCollector;
     private Cluster cassandra;
     private Session session;
