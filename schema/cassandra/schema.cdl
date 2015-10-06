@@ -6,3 +6,11 @@ CREATE TABLE slackalytics.channel_counts (
     messages COUNTER,
     PRIMARY KEY (channel, date)
 );
+
+CREATE TABLE slackalytics.author_counts (
+    channel TEXT,
+    author TEXT,
+    date TIMESTAMP,
+    messages COUNTER,
+    PRIMARY KEY (channel, author, date)
+);
