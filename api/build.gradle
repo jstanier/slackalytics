@@ -1,8 +1,9 @@
 group 'com.jstanier.slackalytics'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
+apply plugin: 'application'
 
+mainClassName = "com.jstanier.slackalytics.api.Main"
 
 repositories {
     mavenLocal()
