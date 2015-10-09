@@ -8,6 +8,7 @@ import com.jstanier.slackalytics.api.domain.ChannelCounts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,14 @@ public class ChannelCountsRepository {
     @Autowired
     private Session session;
 
+    private PreparedStatement ps;
+
+    @PostConstruct
+    public void setup() {
+        ps = session.prepare("select * from channel_counts where channel = ?");
+    }
+
     public List<ChannelCounts> getChannelCountsByChannel(String channel) {
-        PreparedStatement ps = session.prepare("select * from channel_counts where channel = ?");
         ResultSet results = session.execute(ps.bind(channel));
 
         List<ChannelCounts> channelCounts = new ArrayList<>();
