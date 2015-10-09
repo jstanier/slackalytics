@@ -17,22 +17,22 @@ public class ChannelMessageCounter implements IRichBolt {
     private OutputCollector outputCollector;
     private Cluster cassandra;
     private Session session;
+    private PreparedStatement ps;
 
     @Override
     public void prepare(Map stormConf, TopologyContext context, OutputCollector collector) {
         this.outputCollector = collector;
         cassandra = Cluster.builder().addContactPoint("localhost").build();
         session = cassandra.connect("slackalytics");
+        ps = session.prepare("UPDATE channel_counts SET messages = messages + ? " +
+                "WHERE channel = ? AND date = ?");
     }
 
     @Override
     public void execute(Tuple input) {
         String channel = input.getString(1);
         DateTime date = new DateTime().hourOfDay().roundFloorCopy();
-        PreparedStatement ps = session.prepare("UPDATE channel_counts SET messages = messages + ? " +
-                "WHERE channel = ? AND date = ?");
         session.execute(ps.bind(1L, channel, date.toDate()));
-
         outputCollector.ack(input);
     }
 
