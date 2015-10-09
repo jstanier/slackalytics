@@ -22,7 +22,7 @@ public class AuthorCountsRepository {
 
     @PostConstruct
     public void setup() {
-        ps = session.prepare("select * from author_counts where channel = ?");
+        ps = session.prepare("select * from author_counts where channel = ? ");
     }
 
     public List<AuthorCounts> getAuthorCountsByChannel(String channel) {
