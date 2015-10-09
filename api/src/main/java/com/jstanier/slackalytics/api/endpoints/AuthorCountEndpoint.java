@@ -28,7 +28,6 @@ public class AuthorCountEndpoint {
                                     @QueryParam("to") String to) {
         Date fromDate = null, toDate = null;
         if (from != null && to != null) {
-            System.out.println(from + " " + to);
             try {
                 fromDate = Constants.PARAMETER_DATE_FORMAT.parse(from);
                 toDate = Constants.PARAMETER_DATE_FORMAT.parse(to);
@@ -36,8 +35,6 @@ public class AuthorCountEndpoint {
                 throw new DateParsingException("Dates must be given the format " + Constants.DATE_FORMAT);
             }
         }
-
-        System.out.println("From: " + fromDate + " To: " + toDate);
         return Response.ok(repository.getAuthorCountsByChannel(channel)).build();
     }
 }
